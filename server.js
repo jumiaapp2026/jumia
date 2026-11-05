@@ -7,6 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Health check endpoint for UptimeRobot keep-alive
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'active', timestamp: Date.now() });
+});
+
 // Endpoint to trigger STK Push
 app.post('/api/stkpush', async (req, res) => {
     try {
@@ -24,7 +29,6 @@ app.post('/api/stkpush', async (req, res) => {
 
         console.log(`Initiating STK Push for phone: ${formattedPhone}, amount: ${amount}`);
 
-        // Correct SmartPay Pesa API endpoint and payload structure
         const response = await axios.post(
             'https://api.smartpaypesa.com/v1/stk/push',
             {
