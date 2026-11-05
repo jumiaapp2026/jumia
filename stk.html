@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
 
         const phone = phoneInput.value.trim();
-        const amount = 27499; // Extracted total amount (KES 27,499.00)
+        const amount = 27499; // KES 27,499.00
 
         if (!phone) {
             alert('Please enter your M-Pesa phone number.');
@@ -172,13 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // UI Loading State
         const originalText = payBtn.innerText;
         payBtn.disabled = true;
         payBtn.innerText = 'PROCESSING...';
 
         try {
-            // Updated to use your actual Render backend URL
             const response = await fetch('https://smartpay-stk-backend.onrender.com/api/stkpush', {
                 method: 'POST',
                 headers: {
@@ -187,8 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({
                     phone: phone,
                     amount: amount,
-                    ref: "Jumia-Order-27499",
-                    desc: "Jumia Checkout Payment"
+                    account_reference: "Jumia-Order-27499"
                 })
             });
 
